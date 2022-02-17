@@ -24,7 +24,7 @@ client_emulation_directory =  '/Users/jackmaalouf/Projects/Vortex/ClientEmulatio
 def check_if_file_exists():
     print("Checking to see if File Exists on Client")
     try:
-        file_exists = exists(r'/Users/jackmaalouf/Projects/Vortex/ClientEmulationDirectory/Pokemon_Fire_Red.sav')
+        file_exists = exists(r'/Users/jackmaalouf/Desktop/EmulationDirectory/Pokemon_Fire_Red.sav')
         print("File Exists: " + str(file_exists))
         return file_exists
     except:
@@ -34,7 +34,7 @@ def check_if_file_exists():
 
 def compare_files():
     try:
-        file_status = filecmp.cmp(r'C:\Users\jackm\Projects\Vortex/Pokemon_Fire_Reds.sav', r'/Users/jackmaalouf/Projects/Vortex/ServerEmulationDirectory/Pokemon_Fire_Red.sav')
+        file_status = filecmp.cmp(r'C:\Users\jackm\Projects\Vortex/Pokemon_Fire_Red.sav', r'/Users/jackmaalouf/Projects/Vortex/ServerEmulationDirectory/Pokemon_Fire_Red.sav')
         if(file_status == True):
             print("File Sync up to date, no action required")
         elif(file_status == False):
