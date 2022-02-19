@@ -8,23 +8,17 @@ Requires Client to configure Emulation Directory
 Will check to see if rom and save file are present in emulation directory, if not send rom and save file
 If they are present, check timestamp of save file, if it is old, try to update it
 
-
-
-
 '''
 
 from os.path import exists
 import filecmp
 import os
-
-server_emulation_directory = '/Users/jackmaalouf/Projects/Vortex/ServerEmulationDirectory/'
-client_emulation_directory =  '/Users/jackmaalouf/Projects/Vortex/ClientEmulationDirectory/'
-
     
 def check_if_file_exists():
+    # Need to setup Emulation Directory
     print("Checking to see if File Exists on Client")
     try:
-        file_exists = exists(r'/Users/jackmaalouf/Desktop/EmulationDirectory/Pokemon_Fire_Red.sav')
+        file_exists = exists(r'/Users/jackmaalouf/Desktop/ServerEmulationDirectory/Pokemon_Fire_Red.sav')
         print("File Exists: " + str(file_exists))
         return file_exists
     except:
@@ -45,15 +39,11 @@ def compare_files():
         print("File Does not Exist")
         return False
 
-def check_file_hierarchy():
-        localFile = os.path.getmtime(r'/home/ubuntu/Vortex/Pokemon_Fire_red2.sav')
-        foreignFile = os.path.getmtime(r'/home/ubuntu/Vortex/Pokemon_Fire_red2.sav')
-        if(localFile > foreignFile):
-            print("You have new Data on your local machine, would you like to upload to Vortex?")
-        elif(foreignFile > localFile):
-            print("You have new Data on Vortex, would you like to download the latest Save?")
-        print(localFile)
-        print(foreignFile)
+def check_server_file_hierarchy():
+        server_file_latest_update = os.path.getmtime(r'/Users/jackmaalouf/Desktop/ServerEmulationDirectory/Pokemon_Fire_Red.sav')
+        print("File was last Modified at: "+str(server_file_latest_update))
+        return server_file_latest_update
+
    
 
 
