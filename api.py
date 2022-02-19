@@ -13,9 +13,6 @@ class check_file_hierarchy(Resource):
 	def get(self):
 		return {"data": check_server_file_hierarchy()}
 
-
-
-
 api.add_resource(check_file_exists, "/check_file_exists")
 api.add_resource(check_file_hierarchy, "/check_file_hierarchy")
 

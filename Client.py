@@ -3,10 +3,14 @@ import requests
 from os.path import exists
 import filecmp
 import os
+import sys
+from Client.Client_Transfer import send_file_driver
 
-BASE = "http://192.168.1.54:5000/"
+
+BASE = "http://172.20.10.3:5000/"
 
 def main():
+    '''
     print()
     clientEmulationDirectory = '/Users/jackmaalouf/Desktop/ClientEmulationDirectory'
     serverEmulationDirectory = '/Users/jackmaalouf/Desktop/ServerEmulationDirectory'
@@ -29,19 +33,30 @@ def main():
     response = requests.get(BASE + "check_file_hierarchy")
     print(response.json())
 
-    print("--------File Transfer--------")
-    def download_file(filename):
-    return send_from_directory(app.config['UPLOAD_FOLDER'],
-                               filename, as_attachment=True)
+    print("-----------Transfer----------")
+    localFileTime = check_local_file_hierarchy()
+    ServerFileTime = requests.get(BASE + "check_file_hierarchy")
+    ServerFileTime = str(ServerFileTime.json())[9:-1]
+    print("Local File Time: ",localFileTime)
+    print("Server File Time: ",ServerFileTime)
+
+    if (float(ServerFileTime) > localFileTime):
+        print("Server has a newer save, sending over new file")
+    else:
+        print("Client has a newer save, sending over new file")
+
+'''
+
+
 
     menu()
 
 
 def check_if_local_file_exists():
-    print("Checking to see if File Exists on Client:")
+    #print("Checking to see if File Exists on Client:")
     try:
         file_exists = exists(r'/Users/jackmaalouf/Desktop/ClientEmulationDirectory/Pokemon_Fire_Red.sav')
-        print("File Exists: " + str(file_exists))
+        #print("File Exists: " + str(file_exists))
         return file_exists
     except:
         # This is where you would need to send the file and the rom to the configured Directory
@@ -51,11 +66,12 @@ def check_if_local_file_exists():
 
 def check_local_file_hierarchy():
         local_file_latest_update = os.path.getmtime(r'/Users/jackmaalouf/Desktop/ClientEmulationDirectory/Pokemon_Fire_Red.sav')
-        print("File was last Modified at: "+str(local_file_latest_update))
+        #print("File was last Modified at: "+str(local_file_latest_update))
+        return local_file_latest_update
 
 
 def menu():
-    print("\n\nWelcome to Vortex, to get started Please Select an Option From the Menu:\n\n1): Check if Files are Present.\n2): Check if Files are the same.\n3): Check File Times.\n0): Exit Program")
+    print("\n\nWelcome to Vortex, to get started Please Select an Option From the Menu:\n\n1): Check if Files are Present.\n2): Check if Files are the same.\n3): Send File to Server")
     userInput = input("> ")
     while(userInput != "0"):
 
@@ -64,17 +80,22 @@ def menu():
         if userInput == "1":
             print("Checking Files...")
             response = requests.get(BASE + "check_file_exists")
-            print(response.json())
+            serverResponse = str(response.json())[9:-1]
+            print("Server File Status: ",serverResponse)
+            print("Local File Status: ", check_if_local_file_exists())
 
 
         elif userInput == "2":
             print("Comparing Files...")
-            response = requests.get(BASE + "check_file_hierarchy")
-            print(response.json())
+            localFileTime = check_local_file_hierarchy()
+            ServerFileTime = requests.get(BASE + "check_file_hierarchy")
+            ServerFileTime = str(ServerFileTime.json())[9:-1]
+            print("Local File Time: ",localFileTime)
+            print("Server File Time: ",ServerFileTime)
 
         elif userInput == "3":
-            check_file_hierarchy()
-            print("Comparing File Dates")
+            send_file_driver()
+
         userInput = input("> ")
     print("Ending Program")
 
