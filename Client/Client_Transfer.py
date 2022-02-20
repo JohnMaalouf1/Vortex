@@ -41,6 +41,9 @@ def send_file(filename, host, port):
 
 def send_file_driver():
     filename = "Pokemon_Fire_Red.sav"
-    host = "172.20.10.3"
+    host = "192.168.1.51"
     port = 5001
     send_file(filename, host, port)
+
+
+send_file_driver()

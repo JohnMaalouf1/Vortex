@@ -4,10 +4,9 @@ from os.path import exists
 import filecmp
 import os
 import sys
-from Client.Client_Transfer import send_file_driver
+#from Client_Transfer import *
 
-
-BASE = "http://172.20.10.3:5000/"
+BASE = "http://192.168.1.51:5000/"
 
 def main():
     '''
@@ -93,8 +92,7 @@ def menu():
             print("Local File Time: ",localFileTime)
             print("Server File Time: ",ServerFileTime)
 
-        elif userInput == "3":
-            send_file_driver()
+        
 
         userInput = input("> ")
     print("Ending Program")
