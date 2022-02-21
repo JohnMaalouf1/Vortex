@@ -4,7 +4,8 @@ from os.path import exists
 import filecmp
 import os
 import sys
-#from Client_Transfer import *
+from Client_Transfer import send_file_driver
+#from Client_Reciever import send_client_file_driver
 
 BASE = "http://192.168.1.51:5000/"
 
@@ -64,13 +65,13 @@ def check_if_local_file_exists():
 
 
 def check_local_file_hierarchy():
-        local_file_latest_update = os.path.getmtime(r'/Users/jackmaalouf/Desktop/ClientEmulationDirectory/Pokemon_Fire_Red.sav')
+        local_file_latest_update = os.path.getmtime(r'/Users/jackmaalouf/Projects/Vortex/Client/Pokemon_Fire_Red.sav')
         #print("File was last Modified at: "+str(local_file_latest_update))
         return local_file_latest_update
 
 
 def menu():
-    print("\n\nWelcome to Vortex, to get started Please Select an Option From the Menu:\n\n1): Check if Files are Present.\n2): Check if Files are the same.\n3): Send File to Server")
+    print("\n\nWelcome to Vortex, to get started Please Select an Option From the Menu:\n\n1): Check if Files are Present.\n2): Check for new Save Data.")
     userInput = input("> ")
     while(userInput != "0"):
 
@@ -92,7 +93,12 @@ def menu():
             print("Local File Time: ",localFileTime)
             print("Server File Time: ",ServerFileTime)
 
-        
+            if(localFileTime > float(ServerFileTime)):
+                print("New Local Save Data Found, uploading to Vortex")
+                send_file_driver()
+            elif (float(ServerFileTime) > localFileTime):
+                print("New Server Save Data Found, Download to Local Machine")
+                ServerFileTime = requests.get(BASE + "send_server_file")
 
         userInput = input("> ")
     print("Ending Program")
@@ -100,3 +106,5 @@ def menu():
 main()
 
 # 1645058628.8383772
+
+# First system to download the save data needs to upload save data again to open deadlock for downloading
