@@ -31,6 +31,13 @@ def recieve_server_file_driver():
     
     client_socket.close()
     s.close()
+SERVER_HOST = "0.0.0.0"
+SERVER_PORT = 5001
+BUFFER_SIZE = 4096
+SEPARATOR = "<SEPARATOR>"
+
+
+
 
 while True: 
     SERVER_HOST = "0.0.0.0"
