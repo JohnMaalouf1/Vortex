@@ -18,4 +18,4 @@ api.add_resource(check_file_hierarchy, "/check_file_hierarchy")
 
 
 if __name__ == "__main__":
-	app.run(host="0.0.0.0", debug=True)
+	app.run(host="192.168.1.51", debug=True)

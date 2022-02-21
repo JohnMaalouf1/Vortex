@@ -18,7 +18,7 @@ def check_if_file_exists():
     # Need to setup Emulation Directory
     print("Checking to see if File Exists on Client")
     try:
-        file_exists = exists(r'/Users/jackmaalouf/Desktop/ServerEmulationDirectory/Pokemon_Fire_Red.sav')
+        file_exists = exists(r'C:\Users\jackm\Vortex\Server\Pokemon_Fire_Red.sav')
         print("File Exists: " + str(file_exists))
         return file_exists
     except:
@@ -40,7 +40,7 @@ def compare_files():
         return False
 
 def check_server_file_hierarchy():
-        server_file_latest_update = os.path.getmtime(r'/Users/jackmaalouf/Desktop/ServerEmulationDirectory/Pokemon_Fire_Red.sav')
+        server_file_latest_update = os.path.getmtime(r'C:\Users\jackm\Vortex\Server\Pokemon_Fire_Red.sav')
         print("File was last Modified at: "+str(server_file_latest_update))
         return server_file_latest_update
 
