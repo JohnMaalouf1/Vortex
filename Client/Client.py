@@ -55,7 +55,8 @@ def main():
 def check_if_local_file_exists():
     #print("Checking to see if File Exists on Client:")
     try:
-        file_exists = exists(r'/Users/jackmaalouf/Desktop/ClientEmulationDirectory/Pokemon_Fire_Red.sav')
+        #filePath = input("Please Enter File Path: ") # /Users/jackmaalouf/Desktop/ClientEmulationDirectory/Pokemon_Fire_Red.sav
+        file_exists = exists(emulationDirectory)
         #print("File Exists: " + str(file_exists))
         return file_exists
     except:
@@ -65,17 +66,17 @@ def check_if_local_file_exists():
 
 
 def check_local_file_hierarchy():
-        local_file_latest_update = os.path.getmtime(r'/Users/jackmaalouf/Projects/Vortex/Client/Pokemon_Fire_Red.sav')
+        #filePath = input("Please Enter File Path: ") # /Users/jackmaalouf/Desktop/ClientEmulationDirectory/Pokemon_Fire_Red.sav
+        local_file_latest_update = os.path.getmtime(emulationDirectory)
         #print("File was last Modified at: "+str(local_file_latest_update))
         return local_file_latest_update
 
 
 def menu():
+
     print("\n\nWelcome to Vortex, to get started Please Select an Option From the Menu:\n\n1): Check if Files are Present.\n2): Check for new Save Data.")
     userInput = input("> ")
     while(userInput != "0"):
-
-
 
         if userInput == "1":
             print("Checking Files...")
@@ -83,6 +84,11 @@ def menu():
             serverResponse = str(response.json())[9:-1]
             print("Server File Status: ",serverResponse)
             print("Local File Status: ", check_if_local_file_exists())
+            if check_if_local_file_exists() == False:
+                print("Save File is Missing, Fetching from Vortex Server")
+                getFile = requests.get(BASE + "send_server_file")
+                print("File has been Sucessfully Downloaded from Vortex Server")
+
 
 
         elif userInput == "2":
@@ -96,12 +102,17 @@ def menu():
             if(localFileTime > float(ServerFileTime)):
                 print("New Local Save Data Found, uploading to Vortex")
                 send_file_driver()
+
             elif (float(ServerFileTime) > localFileTime):
                 print("New Server Save Data Found, Download to Local Machine")
                 ServerFileTime = requests.get(BASE + "send_server_file")
 
         userInput = input("> ")
     print("Ending Program")
+
+
+emulationDirectory = input("To get Started, please input the Path to the .sav file for the emulation:")
+#/Users/jackmaalouf/Projects/Vortex/Client/Pokemon_Fire_Red.sav
 
 main()
 

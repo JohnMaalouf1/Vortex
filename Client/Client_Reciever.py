@@ -12,7 +12,9 @@ def send_client_file_driver():
     BUFFER_SIZE = 4096
     SEPARATOR = "<SEPARATOR>"
     s = socket.socket()
+    s.setsockopt(socket.SOL_SOCKET, socket.SO_REUSEADDR, 1)
     s.bind((SERVER_HOST, SERVER_PORT))
+    
 
     s.listen(5)
     print(f"[*] Listening as {SERVER_HOST}:{SERVER_PORT}")
@@ -35,4 +37,5 @@ def send_client_file_driver():
     client_socket.close()
     s.close()
     
-send_client_file_driver()
+while True:     
+    send_client_file_driver()
