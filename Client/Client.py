@@ -55,7 +55,7 @@ def main():
 def check_if_local_file_exists():
     #print("Checking to see if File Exists on Client:")
     try:
-        #filePath = input("Please Enter File Path: ") # /Users/jackmaalouf/Desktop/ClientEmulationDirectory/Pokemon_Fire_Red.sav
+        #filePath = input("Please Enter File Path: ") # C:\Users\Jack's_PC\Projects\Vortex\Client\Pokemon_Fire_Red.sav
         file_exists = exists(emulationDirectory)
         #print("File Exists: " + str(file_exists))
         return file_exists
